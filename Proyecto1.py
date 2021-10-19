@@ -2,51 +2,51 @@ data = []
 def potencia(seed):
     return str(int(seed)**2)
 
-def new_row(numero):
-    data.append([]) #se crea la fila
-    data[numero].append(numero) #se inserta el número de iteración
+def new_row(iter):
+    data.append([]) #create a new row
+    data[iter].append(iter) #insert iteration number
 
-def unir(data,seed,numero):
-    data[numero].append(seed)
+def merge(seed,iter,data):
+    data[iter].append(seed)
 
-def medio(seed,numero,band):
+def medio(seed,iter,band):
     if band == True:
-        unir(data,int(seed),numero)
+        merge(seed,iter)
         band = False
         seed = potencia(seed)
-        unir(data,seed,numero)
-        medio(seed,numero,band)
+        merge(seed,iter)
+        medio(seed,iter,band)
     else:
         count = 0
         for i in seed: count += 1
         if count == 4:
             seed = potencia(seed)
-            unir(data,seed,numero)
-            medio(seed,numero,band)
+            merge(seed,iter)
+            medio(seed,iter,band)
         else:
-            if numero >= 0 and numero < 2:
+            if iter >= 0 and iter < 10:
                 if count == 8:
                     seed = seed[2:len(seed)-2]
-                    unir(data,seed,numero)
-                    if numero == 1:
+                    merge(seed,iter)
+                    if iter == 9:
                         return
-                    new_row(numero+1)
-                    medio(seed,numero+1,True)
+                    new_row(iter+1)
+                    medio(seed,iter+1,True)
                 elif count == 6:
                     seed = seed[1:len(seed)-1]
-                    unir(data,seed,numero)
-                    if numero == 1:
+                    merge(seed,iter)
+                    if iter == 9:
                         return
-                    new_row(numero+1)
-                    medio(seed,numero+1,True)
+                    new_row(iter+1)
+                    medio(seed,iter+1,True)
                 else:
-                    medio("0"+seed,numero,band)
+                    medio("0"+seed,iter,band)
             else:
                 print("Programa terminado")
 
-def run(seed,numero):
-    new_row(numero)
-    medio(seed,numero,True)
+def run(seed,iter):
+    new_row(iter)
+    medio(seed,iter,True)
 
 def start():
     # el usuario ingresa la semilla y se eleva al cuadrado
