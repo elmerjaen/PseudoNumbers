@@ -14,27 +14,27 @@ def medio(seed,numero,band):
         unir(data,int(seed),numero)
         band = False
         seed = potencia(seed)
-        unir(data,int(seed),numero)
+        unir(data,seed,numero)
         medio(seed,numero,band)
     else:
         count = 0
         for i in seed: count += 1
         if count == 4:
             seed = potencia(seed)
-            unir(data,int(seed),numero)
+            unir(data,seed,numero)
             medio(seed,numero,band)
         else:
             if numero >= 0 and numero < 2:
                 if count == 8:
                     seed = seed[2:len(seed)-2]
-                    unir(data,int(seed),numero)
+                    unir(data,seed,numero)
                     if numero == 1:
                         return
                     new_row(numero+1)
                     medio(seed,numero+1,True)
                 elif count == 6:
                     seed = seed[1:len(seed)-1]
-                    unir(data,int(seed),numero)
+                    unir(data,seed,numero)
                     if numero == 1:
                         return
                     new_row(numero+1)
