@@ -15,54 +15,32 @@ def table():
     the_table[(0, i)].set_facecolor("#56b5fd")
   plt.show()
 
-def power(seed):
-  return str(int(seed)**2)
-
 def new_row(iter):
   data.append([]) #create a new row
   data[iter].append(iter) #insert iteration number
 
-def merge(seed,iter):
+def merge(iter,seed):
   data[iter].append(seed)
 
-def medio(seed,iter,band):
-  if band == True:
-      merge(seed,iter)
-      seed = power(seed)
-      merge(seed,iter)
-      medio(seed,iter,False)
-  else:
-      count = 0
-      for i in seed:
-        count += 1
-      if count == 4:
-          seed = power(seed)
-          merge(seed,iter)
-          medio(seed,iter,band)
-      else:
-          if iter >= 0 and iter < 10:
-              if count == 8:
-                  seed = seed[2:len(seed)-2]
-                  merge(seed,iter)
-                  if iter == 9:
-                      return
-                  new_row(iter+1)
-                  medio(seed,iter+1,True)
-              elif count == 6:
-                  seed = seed[1:len(seed)-1]
-                  merge(seed,iter)
-                  if iter == 9:
-                      return
-                  new_row(iter+1)
-                  medio(seed,iter+1,True)
-              else:
-                  medio("0"+seed,iter,False)
+def medio(iter,seed):
+  merge(iter,seed) #write seed
+  tam1 = len(seed)
+  seed = str(int(seed)**2)
+  merge(iter,seed) #write seed**2
+  tam2 = len(seed)
+  firstc = int((tam2 - tam1) / 2) #calculate first digit
+  new_seed = seed[firstc:firstc+tam1] #get new seed
+  merge(iter,new_seed) #write new_seed
+  if iter == 9:
+    return
+  new_row(iter+1)
+  medio(iter+1,new_seed)
 
 def start():
   print('Método del Cuadrado Medio.\n')
   seed = input('Ingrese el valor semilla: ')
   new_row(0)
-  medio(seed,0,True)
+  medio(0,seed)
   print("\nEl resultado es:\n")
   table()
 
